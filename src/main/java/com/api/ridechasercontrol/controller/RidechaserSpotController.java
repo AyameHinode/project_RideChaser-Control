@@ -68,4 +68,32 @@ public class RidechaserSpotController {
         return ResponseEntity.status((HttpStatus.OK)).body("Repository Spot deleted successfully.");
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateRidechaserSpot(@PathVariable(value = "id") UUID id,
+                                                       @RequestBody @Valid RidechaserSpotDto ridechaserSpotDto){
+        Optional<RidechaserSpotModel> ridechaserSpotModelOptional = ridechaserSpotService.findById(id);
+        if(ridechaserSpotModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ridechaser Spot not found");
+        }
+
+        /*
+        var ridechaserSpotModel = ridechaserSpotModelOptional.get();
+        ridechaserSpotModel.setRidechaserSpotNumber(ridechaserSpotDto.getRidechaserSpotNumber());
+        ridechaserSpotModel.setIdentifier(ridechaserSpotDto.getIdentifier());
+        ridechaserSpotModel.setRidechaserModel(ridechaserSpotDto.getRidechaserModel());
+        ridechaserSpotModel.setRidechaserModel(ridechaserSpotDto.getRidechaserModel());
+        ridechaserSpotModel.setColor(ridechaserSpotDto.getColor());
+        ridechaserSpotModel.setResponsibleName(ridechaserSpotDto.getResponsibleName());
+        ridechaserSpotModel.setSector(ridechaserSpotDto.getSector());
+        ridechaserSpotModel.setAuthorization(ridechaserSpotDto.getAuthorization());
+        */
+
+        var ridechaserSpotModel = new RidechaserSpotModel();
+        BeanUtils.copyProperties(ridechaserSpotDto, ridechaserSpotModel);
+        ridechaserSpotModel.setId(ridechaserSpotModelOptional.get().getId());
+        ridechaserSpotModel.setRegistrationDate(ridechaserSpotModelOptional.get().getRegistrationDate());
+
+        return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotService.save(ridechaserSpotModel));
+    }
+
 }
