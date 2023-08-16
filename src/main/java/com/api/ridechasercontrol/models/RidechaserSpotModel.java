@@ -1,13 +1,17 @@
 package com.api.ridechasercontrol.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "TB_PARKING_SPOT")
-public class ParkingSpotModel {
+@Table(name = "TB_RIDECHASER_SPOT")
+public class RidechaserSpotModel {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +20,7 @@ public class ParkingSpotModel {
     private UUID id;
 
     @Column(nullable = false, unique = true, length = 10)
-    private String parkingSpotNumber;
+    private String ridechaserSpotNumber;
 
     @Column(nullable = false, unique = true, length = 7)
     private String identifier;
