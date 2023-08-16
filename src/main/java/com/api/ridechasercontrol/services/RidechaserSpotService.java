@@ -5,6 +5,10 @@ import com.api.ridechasercontrol.repositories.RidechaserSpotRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class RidechaserSpotService {
 
@@ -25,6 +29,14 @@ public class RidechaserSpotService {
 
     public boolean existsByRidechaserSpotNumber(String ridechaserSpotNumber) {
         return ridechaserSpotRepository.existsByRidechaserSpotNumber(ridechaserSpotNumber);
+    }
+
+    public List<RidechaserSpotModel> findAll(){
+        return ridechaserSpotRepository.findAll();
+    }
+
+    public Optional<RidechaserSpotModel> findById(UUID id){
+        return  ridechaserSpotRepository.findById(id);
     }
 
 }

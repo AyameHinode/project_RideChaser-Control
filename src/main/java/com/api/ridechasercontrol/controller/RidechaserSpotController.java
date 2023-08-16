@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,6 +41,20 @@ public class RidechaserSpotController {
         BeanUtils.copyProperties(ridechaserSpotDto, ridechaserSpotModel);
         ridechaserSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(ridechaserSpotService.save(ridechaserSpotModel))
-    } 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RidechaserSpotModel>> getAllRidechaserSpots(){
+        return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotService.findAll());
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getOneRidechaserSpot(@PathVariable(value = "id") UUID id){
+        Optional<RidechaserSpotModel> ridechaserSpotModelOptional = ridechaserSpotService.findById(id);
+        if(ridechaserSpotModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ridechaser Spot not found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotModelOptional.get()); 
+    }
 
 }
