@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -48,13 +49,23 @@ public class RidechaserSpotController {
         return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotService.findAll());
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getOneRidechaserSpot(@PathVariable(value = "id") UUID id){
         Optional<RidechaserSpotModel> ridechaserSpotModelOptional = ridechaserSpotService.findById(id);
         if(ridechaserSpotModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ridechaser Spot not found");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotModelOptional.get()); 
+        return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotModelOptional.get());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteRidechaserSpot(@PathVariable(value = "id")UUID id){
+        Optional<RidechaserSpotModel> ridechaserSpotModelOptional = ridechaserSpotService.findById(id);
+        if(!ridechaserSpotModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ridechaser Spot not found");
+        }
+        ridechaserSpotService.delete(ridechaserSpotModelOptional.get());
+        return ResponseEntity.status((HttpStatus.OK)).body("Repository Spot deleted successfully.");
     }
 
 }

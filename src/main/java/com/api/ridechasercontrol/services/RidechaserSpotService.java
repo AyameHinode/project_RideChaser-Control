@@ -39,4 +39,9 @@ public class RidechaserSpotService {
         return  ridechaserSpotRepository.findById(id);
     }
 
+    @Transactional
+    public void delete(RidechaserSpotModel ridechaserSpotModel){
+        ridechaserSpotRepository.delete(ridechaserSpotModel);
+    }
+
 }
