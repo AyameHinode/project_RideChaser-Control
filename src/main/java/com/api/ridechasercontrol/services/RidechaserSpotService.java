@@ -18,4 +18,13 @@ public class RidechaserSpotService {
     public RidechaserSpotModel save(RidechaserSpotModel ridechaserSpotModel) {
         return ridechaserSpotRepository.save(ridechaserSpotModel);
     }
+
+    public boolean existsByIdentifier(String identifier) {
+        return ridechaserSpotRepository.existsByIdentifier(identifier);
+    }
+
+    public boolean existsByRidechaserSpotNumber(String ridechaserSpotNumber) {
+        return ridechaserSpotRepository.existsByRidechaserSpotNumber(ridechaserSpotNumber);
+    }
+
 }

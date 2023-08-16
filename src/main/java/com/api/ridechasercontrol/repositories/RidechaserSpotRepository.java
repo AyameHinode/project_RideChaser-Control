@@ -8,4 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface RidechaserSpotRepository extends JpaRepository<RidechaserSpotModel, UUID> {
+
+    boolean existsByIdentifier(String Identifier);
+
+    boolean existsByRidechaserSpotNumber(String ridechaserSpotNumber);
 }
