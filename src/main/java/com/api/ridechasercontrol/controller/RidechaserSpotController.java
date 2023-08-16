@@ -6,6 +6,9 @@ import com.api.ridechasercontrol.models.RidechaserSpotModel;
 import com.api.ridechasercontrol.services.RidechaserSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,21 +34,22 @@ public class RidechaserSpotController {
     public ResponseEntity<Object> saveRidechaserSpot(@RequestBody @Valid RidechaserSpotDto ridechaserSpotDto){
 
         if(ridechaserSpotService.existsByIdentifier(ridechaserSpotDto.getIdentifier())){
-            return ResponseEntity.status(HttpStatus.CONFLICT.body("Conflict: Identifier is already in use!"))
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Identifier is already in use!");
         }
 
         if(ridechaserSpotService.existsByRidechaserSpotNumber(ridechaserSpotDto.getRidechaserSpotNumber())){
-            return ResponseEntity.status(HttpStatus.CONFLICT.body("Conflict: Spot is already in use!"))
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Spot is already in use!");
         }
 
         var ridechaserSpotModel = new RidechaserSpotModel();
         BeanUtils.copyProperties(ridechaserSpotDto, ridechaserSpotModel);
         ridechaserSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(ridechaserSpotService.save(ridechaserSpotModel))
+        return ResponseEntity.status(HttpStatus.CREATED).body(ridechaserSpotService.save(ridechaserSpotModel));
     }
 
     @GetMapping
-    public ResponseEntity<List<RidechaserSpotModel>> getAllRidechaserSpots(){
+    public ResponseEntity<List<RidechaserSpotModel>> getAllRidechaserSpots(
+            @PageableDefault(page=0, size=10, sort = "id", direction  = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(ridechaserSpotService.findAll());
     }
 
