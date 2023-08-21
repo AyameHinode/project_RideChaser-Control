@@ -31,7 +31,7 @@ public class RidechaserSpotController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveRidechaserSpot(@RequestBody @Valid RidechaserSpotDto ridechaserSpotDto){
+    public ResponseEntity<Object> saveRidechaserSpot( @RequestBody @Valid RidechaserSpotDto ridechaserSpotDto){
 
         if(ridechaserSpotService.existsByIdentifier(ridechaserSpotDto.getIdentifier())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Identifier is already in use!");
