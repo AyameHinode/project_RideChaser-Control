@@ -40,7 +40,4 @@ public class RidechaserSpotModel {
     @Column(nullable = false, length = 30)
     private String sector;
 
-    @Column(nullable = false, length = 200)
-    private String authorization;
-
 }

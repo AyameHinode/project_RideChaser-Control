@@ -89,7 +89,6 @@ public class RidechaserSpotController {
         ridechaserSpotModel.setColor(ridechaserSpotDto.getColor());
         ridechaserSpotModel.setResponsibleName(ridechaserSpotDto.getResponsibleName());
         ridechaserSpotModel.setSector(ridechaserSpotDto.getSector());
-        ridechaserSpotModel.setAuthorization(ridechaserSpotDto.getAuthorization());
         */
 
         var ridechaserSpotModel = new RidechaserSpotModel();

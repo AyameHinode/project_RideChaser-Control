@@ -28,7 +28,5 @@ public class RidechaserSpotDto {
     @NotBlank
     private String sector;
 
-    @NotBlank
-    private String authorization;
 
 }
